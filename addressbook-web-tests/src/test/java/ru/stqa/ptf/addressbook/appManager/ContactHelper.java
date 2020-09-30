@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.stqa.ptf.addressbook.model.ContactData;
 
-public class ContactHelper extends HelperBase{
+public class ContactHelper extends HelperBase {
 
 
   public ContactHelper(WebDriver wd) {
@@ -12,35 +12,43 @@ public class ContactHelper extends HelperBase{
   }
 
   public void goToHomePage() {
-    click(By.linkText("home page")) ;
+
+    click(By.linkText("home page"));
   }
 
   public void submitContactForm() {
-    click(By.xpath("(//input[@name='submit'])[2]")) ;
+
+    click(By.xpath("(//input[@name='submit'])[2]"));
   }
 
   public void fillContactForm(ContactData contactData) {
-    wd.findElement(By.name("firstname")).click();
-    wd.findElement(By.name("firstname")).clear();
-    wd.findElement(By.name("firstname")).sendKeys(contactData.getFirstname());
-    wd.findElement(By.name("middlename")).click();
-    wd.findElement(By.name("middlename")).clear();
-    wd.findElement(By.name("middlename")).sendKeys(contactData.getMiddlename());
-    wd.findElement(By.name("lastname")).click();
-    wd.findElement(By.name("lastname")).clear();
-    wd.findElement(By.name("lastname")).sendKeys(contactData.getLastname());
-    wd.findElement(By.name("nickname")).click();
-    wd.findElement(By.name("nickname")).clear();
-    wd.findElement(By.name("nickname")).sendKeys(contactData.getNickname());
-    wd.findElement(By.name("address")).click();
-    wd.findElement(By.name("address")).clear();
-    wd.findElement(By.name("address")).sendKeys(contactData.getAddress());
-    wd.findElement(By.name("mobile")).click();
-    wd.findElement(By.name("mobile")).clear();
-    wd.findElement(By.name("mobile")).sendKeys(contactData.getMobileCellPhone());
-    wd.findElement(By.name("email")).click();
-    wd.findElement(By.name("email")).click();
-    wd.findElement(By.name("email")).clear();
-    wd.findElement(By.name("email")).sendKeys(contactData.getEmail());
+    type(By.name("firstname"), contactData.getFirstname());
+    type(By.name("middlename"), contactData.getMiddlename());
+    type(By.name("lastname"), contactData.getLastname());
+    type(By.name("nickname"), contactData.getNickname());
+    type(By.name("address"), contactData.getAddress());
+    type(By.name("mobile"), contactData.getMobileCellPhone());
+    type(By.name("email"), contactData.getEmail());
+
+  }
+
+  public void editContact() {
+    click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+
+  }
+
+  public void submitModificationContact() {
+    click(By.xpath("(//input[@name='update'])[2]"));
+  }
+
+  public void chooseFirstContact() {
+    click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td/input"));
+  }
+
+  public void clickDeleteContact() {
+    click(By.xpath("//input[@value='Delete']"));
+  }
+  public void closeAlertOfDeletion() {
+    wd.switchTo().alert().accept();
   }
 }
