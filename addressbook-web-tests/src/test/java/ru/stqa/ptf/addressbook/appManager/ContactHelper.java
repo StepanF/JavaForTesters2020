@@ -4,19 +4,19 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.stqa.ptf.addressbook.model.ContactData;
 
-public class ContactHelper {
-  private WebDriver wd;
+public class ContactHelper extends HelperBase{
+
 
   public ContactHelper(WebDriver wd) {
-    this.wd = wd;
+    super(wd);
   }
 
   public void goToHomePage() {
-    wd.findElement(By.linkText("home page")).click();
+    click(By.linkText("home page")) ;
   }
 
   public void submitContactForm() {
-    wd.findElement(By.xpath("(//input[@name='submit'])[2]")).click();
+    click(By.xpath("(//input[@name='submit'])[2]")) ;
   }
 
   public void fillContactForm(ContactData contactData) {
