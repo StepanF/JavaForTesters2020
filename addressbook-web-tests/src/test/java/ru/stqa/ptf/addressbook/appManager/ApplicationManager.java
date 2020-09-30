@@ -9,18 +9,21 @@ import ru.stqa.ptf.addressbook.model.ContactData;
 
 import java.util.concurrent.TimeUnit;
 
-public class ApplicationManager   {
-  public WebDriver wd;
+public class ApplicationManager {
+
+  WebDriver wd;
 
   private   NavigationHelper navigationHelper  ;
   private   GroupHelper groupHelper ;
   private   SessionHelper sessionHelper ;
+  private   ContactHelper contactHelper ;
 
   public void init() {
     wd = new FirefoxDriver();
     wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     wd.get("http://localhost/addressbook/group.php");
     groupHelper = new GroupHelper(wd);
+    contactHelper = new ContactHelper(wd);
     navigationHelper = new NavigationHelper(wd);
     sessionHelper = new SessionHelper(wd);
     sessionHelper.login("admin", "secret");
@@ -52,42 +55,6 @@ public class ApplicationManager   {
     }
   }
 
-  public void goToHomePage() {
-    wd.findElement(By.linkText("home page")).click();
-  }
-
-  public void submitContactForm() {
-    wd.findElement(By.xpath("(//input[@name='submit'])[2]")).click();
-  }
-
-  public void fillContactForm(ContactData contactData) {
-    wd.findElement(By.name("firstname")).click();
-    wd.findElement(By.name("firstname")).clear();
-    wd.findElement(By.name("firstname")).sendKeys(contactData.getFirstname());
-    wd.findElement(By.name("middlename")).click();
-    wd.findElement(By.name("middlename")).clear();
-    wd.findElement(By.name("middlename")).sendKeys(contactData.getMiddlename());
-    wd.findElement(By.name("lastname")).click();
-    wd.findElement(By.name("lastname")).clear();
-    wd.findElement(By.name("lastname")).sendKeys(contactData.getLastname());
-    wd.findElement(By.name("nickname")).click();
-    wd.findElement(By.name("nickname")).clear();
-    wd.findElement(By.name("nickname")).sendKeys(contactData.getNickname());
-    wd.findElement(By.name("address")).click();
-    wd.findElement(By.name("address")).clear();
-    wd.findElement(By.name("address")).sendKeys(contactData.getAddress());
-    wd.findElement(By.name("mobile")).click();
-    wd.findElement(By.name("mobile")).clear();
-    wd.findElement(By.name("mobile")).sendKeys(contactData.getMobileCellPhone());
-    wd.findElement(By.name("email")).click();
-    wd.findElement(By.name("email")).click();
-    wd.findElement(By.name("email")).clear();
-    wd.findElement(By.name("email")).sendKeys(contactData.getEmail());
-  }
-
-  public void goToAddNew() {
-    wd.findElement(By.linkText("add new")).click();
-  }
 
   public GroupHelper getGroupHelper() {
     return groupHelper;
@@ -98,5 +65,9 @@ public class ApplicationManager   {
   }
   public SessionHelper sessionHelper(){
     return sessionHelper;
+  }
+
+  public ContactHelper getContactHelper() {
+    return contactHelper;
   }
 }
