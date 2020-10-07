@@ -1,6 +1,7 @@
 .gradle
-*.class
+# *.class
 build/
+out/
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -13,6 +14,5 @@ gradle-app.setting
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
-*.class
 addressbook-web-tests/out/test/classes/ru/stqa/ptf/addressbook/appManager/ApplicationManager.class
 addressbook-web-tests/out/test/classes/ru/stqa/ptf/addressbook/appManager/GroupHelper.class
