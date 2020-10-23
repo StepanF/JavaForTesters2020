@@ -40,6 +40,9 @@ public class ContactHelper extends HelperBase {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
   }
+  public void goToAddNew() {
+      click(By.linkText("add new"));
+  }
 
   public void editContact() {
     click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
@@ -57,7 +60,19 @@ public class ContactHelper extends HelperBase {
   public void clickDeleteContact() {
     click(By.xpath("//input[@value='Delete']"));
   }
+
   public void closeAlertOfDeletion() {
     wd.switchTo().alert().accept();
   }
+
+  public void createContact(ContactData contact) {
+    goToAddNew();
+    fillContactForm(contact,true);
+    submitContactForm();
+    goToHomePage();
+  }
+
+  public boolean isThereAContact() {
+    return isElementPresent(By.xpath("//table[@id='maintable']/tbody/tr[2]/td/input")) ;
+   }
 }
