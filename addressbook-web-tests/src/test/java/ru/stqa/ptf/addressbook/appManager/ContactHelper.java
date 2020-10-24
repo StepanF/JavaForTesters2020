@@ -7,6 +7,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.ptf.addressbook.model.ContactData;
+import ru.stqa.ptf.addressbook.model.GroupData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
 
@@ -44,8 +48,8 @@ public class ContactHelper extends HelperBase {
       click(By.linkText("add new"));
   }
 
-  public void editContact() {
-    click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+  public void editContact(int index) {
+    wd.findElements(By.cssSelector("img[title = 'Edit']")).get(index).click();
 
   }
 
@@ -53,9 +57,9 @@ public class ContactHelper extends HelperBase {
     click(By.xpath("(//input[@name='update'])[2]"));
   }
 
-  public void chooseFirstContact() {
-    click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td/input"));
-  }
+  public void selectContact(int index) {
+    wd.findElements(By.name("selected[]")).get(index).click();
+      }
 
   public void clickDeleteContact() {
     click(By.xpath("//input[@value='Delete']"));
@@ -77,6 +81,19 @@ public class ContactHelper extends HelperBase {
    }
 
   public int getContactCount() {
-    return wd.findElements(By.name("selected[]")).size();
+    return wd.findElements(By.cssSelector("input[name='selected[]'][type='checkbox']")).size();
+  }
+
+  public List<ContactData> getContactList() {
+    List<ContactData> contacts = new ArrayList<ContactData>();
+    List<WebElement> elements  = wd.findElements(By.name("entry"));
+    for (WebElement element : elements){
+      List<WebElement> tag = element.findElements(By.tagName("td"));
+      String firstname = tag.get(2).getText();
+      String lastname = tag.get(1).getText();
+     ContactData contact = new ContactData(firstname, null, lastname, null, null, null, null, null);
+     contacts.add(contact);
+    }
+    return contacts;
   }
 }
