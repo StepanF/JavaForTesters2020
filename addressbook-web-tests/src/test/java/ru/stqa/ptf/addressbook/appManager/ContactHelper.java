@@ -84,7 +84,7 @@ public class ContactHelper extends HelperBase {
     return wd.findElements(By.cssSelector("input[name='selected[]'][type='checkbox']")).size();
   }
 
-  public List<ContactData> getContactList() {
+  public List<ContactData> list() {
     List<ContactData> contacts = new ArrayList<ContactData>();
     List<WebElement> elements  = wd.findElements(By.name("entry"));
     for (WebElement element : elements){
@@ -96,5 +96,16 @@ public class ContactHelper extends HelperBase {
      contacts.add(contact);
     }
     return contacts;
+  }
+  public void delete(int index) {
+     selectContact(index);
+     clickDeleteContact();
+     closeAlertOfDeletion();
+  }
+  public void modify(int index, ContactData contact) {
+     editContact(index);
+     fillContactForm(contact,false);
+     submitModificationContact();
+     goToHomePage();
   }
 }
