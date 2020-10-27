@@ -1,16 +1,15 @@
 package ru.stqa.ptf.addressbook.appManager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.ptf.addressbook.model.ContactData;
-import ru.stqa.ptf.addressbook.model.GroupData;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -50,16 +49,19 @@ public class ContactHelper extends HelperBase {
 
   public void editContact(int index) {
     wd.findElements(By.cssSelector("img[title = 'Edit']")).get(index).click();
-
+  }
+  private void editContactById(int id) {
+    wd.findElement(By.xpath("//input[@value='" + id + "']/../../td[8]/a")).click();
   }
 
   public void submitModificationContact() {
     click(By.xpath("(//input[@name='update'])[2]"));
   }
 
-  public void selectContact(int index) {
-    wd.findElements(By.name("selected[]")).get(index).click();
-      }
+
+  public void selectContactById(int id) {
+    wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
+  }
 
   public void clickDeleteContact() {
     click(By.xpath("//input[@value='Delete']"));
@@ -84,8 +86,9 @@ public class ContactHelper extends HelperBase {
     return wd.findElements(By.cssSelector("input[name='selected[]'][type='checkbox']")).size();
   }
 
-  public List<ContactData> list() {
-    List<ContactData> contacts = new ArrayList<ContactData>();
+
+  public Set<ContactData> all() {
+    Set<ContactData> contacts = new HashSet<ContactData>();
     List<WebElement> elements  = wd.findElements(By.name("entry"));
     for (WebElement element : elements){
       List<WebElement> tag = element.findElements(By.tagName("td"));
@@ -96,15 +99,20 @@ public class ContactHelper extends HelperBase {
     }
     return contacts;
   }
-  public void delete(int index) {
-     selectContact(index);
-     clickDeleteContact();
-     closeAlertOfDeletion();
+
+  public void delete(ContactData contact) {
+    selectContactById(contact.getId());
+    clickDeleteContact();
+    closeAlertOfDeletion();
   }
-  public void modify(int index, ContactData contact) {
-     editContact(index);
+
+  public void modify(  ContactData contact) {
+     editContactById(contact.getId());
      fillContactForm(contact,false);
      submitModificationContact();
      goToHomePage();
   }
+
+
 }
+
