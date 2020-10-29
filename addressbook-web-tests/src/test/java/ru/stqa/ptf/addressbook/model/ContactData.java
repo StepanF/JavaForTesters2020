@@ -12,6 +12,8 @@ public class ContactData {
   private  String mobileCellPhone;
   private  String email;
   private String group;
+  private String homePhone;
+  private String workPhone;
 
   @Override
   public String toString() {
@@ -51,6 +53,14 @@ public class ContactData {
 
   public String getEmail() {
     return email;
+  }
+
+  public String getWorkPhone() {
+    return workPhone;
+  }
+
+  public String getHomePhone() {
+    return homePhone;
   }
 
   @Override
@@ -116,5 +126,15 @@ public class ContactData {
     this.group = group;
     return this;
   }
+  public ContactData withHomePhone(String homePhone) {
+    this.homePhone = homePhone;
+    return this;
+  }
 
+
+
+  public ContactData withWorkPhone(String workPhone) {
+    this.workPhone = workPhone;
+    return this;
+  }
 }
