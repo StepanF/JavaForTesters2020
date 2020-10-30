@@ -15,6 +15,26 @@ public class ContactData {
   private String group;
   private String homePhone;
   private String workPhone;
+  private  String allPhones;
+  private String allEmails;
+
+  public String getAllEmails() {
+    return allEmails;
+  }
+
+  public ContactData withAllEmails(String allEmails) {
+    this.allEmails = allEmails;
+    return  this;
+  }
+
+  public String getAllPhones() {
+    return allPhones;
+  }
+
+  public ContactData withAllPhones(String allPhones) {
+    this.allPhones = allPhones;
+    return  this;
+  }
 
   @Override
   public String toString() {

@@ -98,11 +98,12 @@ public class ContactHelper extends HelperBase {
       String firstname = cells.get(2).getText();
       String lastname = cells.get(1).getText();
       String address = cells.get(3).getText();
-      String[] email = cells.get(4).getText().split("\n");
-      String[] phones = cells.get(5).getText().split("\n");
+      String allEmails = cells.get(4).getText();
+//      String[] phones = cells.get(5).getText().split("\n"); так можно разбивать на строки и преобразовывать в массив
+      String allPhones = cells.get(5).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
       contactCache.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname).
-            withHomePhone(phones[0]).withMobileCellPhone(phones[1]).withWorkPhone(phones[2]).withAddress(address).withEmail(email[0]).withEmail2(email[1]));
+            withAllPhones(allPhones).withAddress(address).withAllEmails(allEmails));
     }
     return new Contacts(contactCache);
   }
