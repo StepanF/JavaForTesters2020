@@ -6,7 +6,11 @@ import ru.stqa.ptf.addressbook.model.ContactData;
 import ru.stqa.ptf.addressbook.model.Contacts;
 
 import javax.sound.midi.Soundbank;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,21 +23,20 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ContactCreationTests extends TestBase {
 
   @DataProvider
-  public Iterator<Object[]> validContacts() {
-    List<Object[]> list = new ArrayList<Object[]>();
-    list.add(new Object[]{new ContactData().withFirstname("Иван1").withMiddlename("Иванович")
-          .withLastname("Иванов").withNickname("Ivan").withAddress("Москва Петровка 38").
-                withMobileCellPhone("89776666666")
-          .withEmail("IvanMolodec@mail.ru").withGroup("test1")});
-    list.add(new Object[]{new ContactData().withFirstname("Иван2").withMiddlename("Иванович")
-          .withLastname("Иванов").withNickname("Ivan").withAddress("Москва Петровка 38").
-                withMobileCellPhone("89776666666")
-          .withEmail("IvanMolodec@mail.ru").withGroup("test1")});
-    list.add(new Object[]{new ContactData().withFirstname("Иван3").withMiddlename("Иванович")
-          .withLastname("Иванов").withNickname("Ivan").withAddress("Москва Петровка 38").
-                withMobileCellPhone("89776666666")
-          .withEmail("IvanMolodec@mail.ru").withGroup("test1")});
-    return list.iterator();
+  public Iterator<Object[]> validContacts() throws IOException {
+    {
+      List<Object[]> list = new ArrayList<Object[]>();
+      BufferedReader reader = new BufferedReader(new FileReader((new File("src/test/resources/contacts.csv"))));
+      String line = reader.readLine();
+      while (line != null) {
+        String[] split = line.split(";");
+        list.add(new Object[]{new ContactData().withFirstname(split[0]).withMiddlename(split[1]).
+              withLastname(split[2]).withNickname(split[3]).withAddress(split[4]).withMobileCellPhone(split[5]).
+              withEmail(split[6]).withGroup(split[7])});
+        line = reader.readLine();
+      }
+      return list.iterator();
+    }
   }
 
   @Test(dataProvider = "validContacts")
