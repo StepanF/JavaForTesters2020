@@ -1,0 +1,32 @@
+[
+  {
+    "firstname": "Иван 0",
+    "middlename": "Иванович 0",
+    "lastname": "Иванов 0",
+    "nickname": "Ivan 0",
+    "address": "Москва Петровка 0",
+    "mobileCellPhone": "89776666660",
+    "email": "IvanMolodec0@mail.ru",
+    "group": "test1"
+  },
+  {
+    "firstname": "Иван 1",
+    "middlename": "Иванович 1",
+    "lastname": "Иванов 1",
+    "nickname": "Ivan 1",
+    "address": "Москва Петровка 1",
+    "mobileCellPhone": "89776666661",
+    "email": "IvanMolodec1@mail.ru",
+    "group": "test1"
+  },
+  {
+    "firstname": "Иван 2",
+    "middlename": "Иванович 2",
+    "lastname": "Иванов 2",
+    "nickname": "Ivan 2",
+    "address": "Москва Петровка 2",
+    "mobileCellPhone": "89776666662",
+    "email": "IvanMolodec2@mail.ru",
+    "group": "test1"
+  }
+]
