@@ -79,7 +79,7 @@ public class ContactCreationTests extends TestBase {
           before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
   }
 
-  @Test(enabled = true)
+/*  @Test(enabled = false) //тест для проверки кривого создания контакта
   public void testBadContactCreation() throws Exception {
     Contacts before = app.contact().all();
     ContactData contact = new ContactData().withFirstname("Иван79'").withMiddlename("Иванович'")
@@ -91,10 +91,10 @@ public class ContactCreationTests extends TestBase {
     Contacts after = app.contact().all();
     assertThat(after, equalTo(before));
   }
+
+*/
+
 }
-
-
-
 /* Тест для проверки наличия файла
 
  @Test
