@@ -75,7 +75,12 @@ public class ContactData {
   private String photo;
 
   public File getPhoto() {
-    return new File(photo);
+    if (photo == null) {
+      return null;
+    }
+    else {
+      return new File(photo);
+    }
   }
 
 
