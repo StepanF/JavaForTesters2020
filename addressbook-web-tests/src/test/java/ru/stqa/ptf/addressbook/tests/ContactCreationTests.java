@@ -56,12 +56,13 @@ public class ContactCreationTests extends TestBase {
 
   @Test(dataProvider = "validContactsFromJson")
   public void testContactCreation(ContactData contact) throws Exception {
-    Contacts before = app.contact().all();// здесь не меняю на проверку из базы, оставляю на память на будущее, пускай проверяется джейсон
+    Contacts before = app.db().contacts();
     app.contact().createContact(contact);
     assertThat(app.contact().count(), equalTo(before.size() + 1));
-    Contacts after = app.contact().all();// здесь не меняю на проверку из базы, оставляю на память на будущее, пускай проверяется джейсон
+    Contacts after = app.db().contacts();
     assertThat(after, equalTo(
           before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+    verifyContactListInUI();
   }
 
   @Test(enabled = true)
@@ -77,6 +78,7 @@ public class ContactCreationTests extends TestBase {
     Contacts after = app.db().contacts();
     assertThat(after, equalTo(
           before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+    verifyContactListInUI();
   }
 
 /*  @Test(enabled = false) //тест для проверки кривого создания контакта

@@ -8,9 +8,17 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import ru.stqa.ptf.addressbook.appManager.ApplicationManager;
+import ru.stqa.ptf.addressbook.model.ContactData;
+import ru.stqa.ptf.addressbook.model.Contacts;
+import ru.stqa.ptf.addressbook.model.GroupData;
+import ru.stqa.ptf.addressbook.model.Groups;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestBase {
   Logger logger = LoggerFactory.getLogger((TestBase.class));
@@ -27,6 +35,7 @@ public class TestBase {
   public void tearDown() throws Exception {
     app.stop();
   }
+
   @BeforeMethod
   public void logTestStart(Method m, Object[] p) {
     logger.info("start test " + m.getName() + " with parameters" + Arrays.asList(p));
@@ -36,8 +45,29 @@ public class TestBase {
   public void logTestStop(Method m) {
     logger.info("stop test " + m.getName());
   }
+
   public ApplicationManager getApp() {
     return app;
   }
-}
 
+
+  public void verifyGroupListInUI() {
+    if (Boolean.getBoolean("verifyUI")) {
+      Groups dbGroups = app.db().groups();
+      Groups uiGroups = app.group().all();
+      assertThat(uiGroups, equalTo(dbGroups.stream().map((g) -> new GroupData().
+            withId(g.getId()).withName(g.getName())).collect(Collectors.toSet())));
+    }
+  }
+
+  public void verifyContactListInUI() {
+    if (Boolean.getBoolean("verifyUI")) {
+      Contacts dbContacts = app.db().contacts();
+      Contacts uiContacts = app.contact().all();
+      assertThat(uiContacts, equalTo(dbContacts.stream().map((c) -> new ContactData().
+            withId(c.getId()).withFirstname(c.getFirstname()).withMiddlename(c.getMiddlename())
+            .withLastname(c.getLastname()).withNickname(c.getNickname()).withAddress(c.getAddress()).
+                  withMobileCellPhone(c.getMobileCellPhone())).collect(Collectors.toSet())));
+    }
+  }
+}
