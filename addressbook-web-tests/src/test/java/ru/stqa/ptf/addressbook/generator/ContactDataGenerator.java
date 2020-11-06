@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
 import ru.stqa.ptf.addressbook.model.ContactData;
+import ru.stqa.ptf.addressbook.model.Groups;
+import ru.stqa.ptf.addressbook.tests.TestBase;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -15,7 +17,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactDataGenerator {
+public class ContactDataGenerator extends TestBase {
 
   @Parameter(names = "-c", description = "Contacts count")
   public int count;
@@ -72,18 +74,19 @@ public class ContactDataGenerator {
     try (Writer writer = new FileWriter(file)) {
       for (ContactData contact : contacts) {
         writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s\n", contact.getFirstname(), contact.getMiddlename(), contact.getLastname(),
-              contact.getNickname(), contact.getAddress(), contact.getMobileCellPhone(), contact.getEmail(), contact.getGroup()));
+              contact.getNickname(), contact.getAddress(), contact.getMobileCellPhone(), contact.getEmail(), contact.getGroups()));
       }
     }
   }
 
   private static List<ContactData> generateContacts(int count) {
     List<ContactData> contacts = new ArrayList<ContactData>();
+    Groups groups = app.db().groups();
     for (int i = 0; i < count; i++) {
       contacts.add(new ContactData().withFirstname(String.format("Иван %s", i)).withMiddlename(String.format("Иванович %s", i))
             .withLastname(String.format("Иванов %s", i)).withNickname(String.format("Ivan %s", i)).
                   withAddress(String.format("Москва Петровка %s", i)).withMobileCellPhone(String.format("8977666666%s", i))
-            .withEmail(String.format("IvanMolodec%s@mail.ru", i)).withGroup("test1"));
+            .withEmail(String.format("IvanMolodec%s@mail.ru", i)).inGroup(groups.iterator().next()));
     }
     return contacts;
   }
