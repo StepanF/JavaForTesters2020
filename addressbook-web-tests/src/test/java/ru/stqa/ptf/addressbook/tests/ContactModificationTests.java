@@ -32,7 +32,7 @@ public class ContactModificationTests extends TestBase {
     assertThat(app.contact().count(), equalTo(before.size()));
     Contacts after = app.db().contacts();
     assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
-    verifyContactListInUI();
+    verifyContactListInUI();//для включения проверки данных UI c базой, в настройки добавить -DverifyUI=true
   }
 
 

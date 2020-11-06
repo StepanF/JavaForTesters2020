@@ -62,7 +62,7 @@ public class ContactCreationTests extends TestBase {
     Contacts after = app.db().contacts();
     assertThat(after, equalTo(
           before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
-    verifyContactListInUI();
+    verifyContactListInUI();//для включения проверки данных UI c базой, в настройки добавить -DverifyUI=true
   }
 
   @Test(enabled = true)
@@ -78,7 +78,7 @@ public class ContactCreationTests extends TestBase {
     Contacts after = app.db().contacts();
     assertThat(after, equalTo(
           before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
-    verifyContactListInUI();
+    verifyContactListInUI();//для включения проверки данных UI c базой, в настройки добавить -DverifyUI=true
   }
 
 /*  @Test(enabled = false) //тест для проверки кривого создания контакта
