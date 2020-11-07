@@ -150,6 +150,9 @@ public class ContactHelper extends HelperBase {
     List<WebElement> cells = row.findElements(By.tagName("td"));
     cells.get(7).findElement(By.tagName("a")).click();
   }
-
+  public void addToGroup(ContactData findContact) {
+    selectContactById(findContact.getId());
+    wd.findElement(By.name("add")).click();
+  }
 }
 
